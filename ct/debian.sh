@@ -72,6 +72,49 @@ while [ $opt != '' ]
       esac
     fi
   done
+show_menu2(){
+    printf "    ${YW} 1)${YW} Use Auto Login ${CL}\n"
+    printf "    ${YW} 2)${GN} Use Password (changeme) ${CL}\n"
+
+    printf "Please choose a Password Type and hit enter or ${RD}x${CL} to exit."
+    read opt
+}
+
+option_picked(){
+    message=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message}${CL}\n"
+}
+show_menu2
+while [ $opt != '' ]
+    do
+    if [ $opt = '' ]; then
+      exit;
+    else
+      case $opt in
+        1) clear;
+            header_info;
+            option_picked "Using Auto Login";
+            PW=" "
+            break;
+        ;;
+        2) clear;
+            header_info;
+            option_picked "Using Password (changeme)";
+            PW="-password changeme"
+            break;
+        ;;
+
+        x)exit;
+        ;;
+        \n)exit;
+        ;;
+        *)clear;
+            option_picked "Please choose a Password Type from the menu";
+            show_menu2;
+        ;;
+      esac
+    fi
+  done
 
 set -o errexit
 set -o errtrace
@@ -140,6 +183,7 @@ export PCT_OPTIONS="
   -cores 1
   -memory 512
   -unprivileged ${IM}
+  $PW
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
@@ -159,7 +203,7 @@ echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$HN-install.sh)" || exit
+lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/dev/setup/$HN-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
