@@ -58,8 +58,8 @@ echo -en "${GN} Installing Dependencies... "
 #apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 echo -e "${CM}${CL} \r"
-PASS=$(cat /etc/shadow |grep root |awk -F\: '{print$2}') &>/dev/null
-if ("${PASS}" == "*:");
+PASS=$(grep -w "root" /etc/shadow | cut -b6)
+if [ ${PASS} == * ];
 then
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
