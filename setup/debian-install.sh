@@ -58,7 +58,7 @@ echo -en "${GN} Installing Dependencies... "
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 echo -e "${CM}${CL} \r"
-PASS=$(cat /etc/shadow |grep root |awk -F\:) 
+PASS=$(cat /etc/shadow |grep root |awk -F\: '{print$2}') 
 if ("${PASS}" = "*")
 then
 echo -en "${GN} Customizing Container... "
