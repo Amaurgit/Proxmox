@@ -184,7 +184,7 @@ export PCT_OPTIONS="
   -cores 1
   -memory 512
   -unprivileged ${IM}
-  $PW
+  ${PW}
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
