@@ -58,7 +58,8 @@ echo -en "${GN} Installing Dependencies... "
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 echo -e "${CM}${CL} \r"
-
+PASS=$(awk -F: '/root/ {if(substr($2,1,1) == "*"){print "False"} else {print "True"}}' /etc/shadow )    
+if [ $PASS -eq "False" ]
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
@@ -73,7 +74,7 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CM}${CL} \r"
-
+fi
 echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
