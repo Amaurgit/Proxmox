@@ -38,8 +38,8 @@ show_menu(){
 }
 
 option_picked(){
-    message=${@:-"${CL}Error: No message passed"}
-    printf " ${YW}${message}${CL}\n"
+    message1=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
 }
 show_menu
 while [ $opt != '' ]
@@ -82,6 +82,7 @@ show_menu2(){
 
 option_picked(){
     message=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
     printf " ${YW}${message}${CL}\n"
 }
 show_menu2
