@@ -109,7 +109,7 @@ echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
 pveam update >/dev/null
 echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
 OSTYPE=ubuntu
-OSVERSION=${OSTYPE}-21.04
+OSVERSION=${OSTYPE}-21.10
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
 TEMPLATE="${TEMPLATES[-1]}"
 pveam download local $TEMPLATE >/dev/null ||
